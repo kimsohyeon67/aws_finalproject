@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board.spring.mybatis.BoardDAO"> <!-- @Mapper인터페이스명 -->
+	<select id="getTotalBoard" resultType="int">
+		select count(*) from board
+	</select>
+	<select id="getBoardList" parameterType="int" resultType="boarddto">
+		select * from board order by writingtime desc limit #{limit},3
+	</select>
+<!-- 	<select id="getOneBoard" parameterType="int" resultType="boarddto">
+		select * from board where seq=#{seq}
+	</select> -->
+	<select id="updateViewCount" parameterType="int" resultType="int">
+		update board set viewcount=viewcount+1 where seq=#{seq}
+	</select>
+<!-- 	<select id="insertOneBoard" parameterType="int" resultType="int">
+		insert into board(title, contents,writer, viewcount, writingtime)
+		values(title=#{title}, contents=#{contents}, writer=#{writer}, viewcount=#{viewcount}, writingtime=now())
+	</select> -->
+	<select id="insertOneBoard" parameterType="int" resultType="int">
+		insert into board(title, contents, writer)
+		values(#{title}, #{contents}, #{writer},0, now())
+	</select>
+	<select id="getOneBoard" parameterType="int" resultType="int">
+		insert into board
+		values(#{title}, #{contents}, #{writer}, #{viewcount}, #{writingtime})
+	</select>
+</mapper>
